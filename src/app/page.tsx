@@ -2,7 +2,7 @@ import FormLogin from "@/components/FormLogin";
 
 import Image from "next/image";
 
-import imgLogin from '@/app/assets/images/imgLogin.jpg';
+import imgLogin from '@/assets/images/imgLogin.jpg';
 
 export default function Home() {
   return (

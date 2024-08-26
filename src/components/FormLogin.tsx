@@ -14,7 +14,7 @@ export default function FormLogin(){
 
         signIn("credentials", {
             ...data,
-            callbackUrl: "/admin/dashboard",
+            callbackUrl: "/dashboard",
         });
     }
 
