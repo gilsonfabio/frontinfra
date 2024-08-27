@@ -144,8 +144,8 @@ export default function AltObra({params}: any){
                         <input className="w-[30%] border-2 border-black p-3 mb-3 focus:border-blue-700" name="Cep" placeholder="Cep" type="text" value={obrCep} onChange={(e) => {setObrCep(e.target.value)}}/>
                     </div>
                     <div className="flex flex-row justify-between items-center w-full h-auto gap-2">
-                        <input className="w-[50%] border-2 border-black p-3 mb-3 focus:border-blue-700" name="Inicio" placeholder="Inicio" type="text" value={obrInicio} onChange={(e) => {setObrInicio(e.target.value)}}/>
-                        <input className="w-[50%] border-2 border-black p-3 mb-3 focus:border-blue-700" name="preTermino" placeholder="Previsão Termino" type="text" value={obrPreTermino} onChange={(e) => {setObrPreTermino(e.target.value)}}/>
+                        <input className="w-[50%] border-2 border-black p-3 mb-3 focus:border-blue-700" name="Inicio" placeholder="Inicio" type="date" value={obrInicio} onChange={(e) => {setObrInicio(e.target.value)}}/>
+                        <input className="w-[50%] border-2 border-black p-3 mb-3 focus:border-blue-700" name="preTermino" placeholder="Previsão Termino" type="date" value={obrPreTermino} onChange={(e) => {setObrPreTermino(e.target.value)}}/>
                     </div> 
                     <div className="flex flex-row justify-between items-center w-full h-auto gap-2">
                         <input className="w-[50%] border-2 border-black p-3 mb-3 focus:border-blue-700" name="vlrContrato" placeholder="Valor do Contrato" type="text" value={obrVlrContrato} onChange={(e) => {setObrVlrContrato(e.target.value)}}/>

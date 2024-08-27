@@ -106,11 +106,11 @@ export default function ObrDetalhes({params}: any){
                         <div className='flex flex-row justify-between w-full mb-2'>
                             <div className='flex flex-col items-start justify-center px-2'>
                                 <span className="text-xs text-slate-400 font-bold ">Dt.Início:</span>
-                                <span className="text-xs text-white font-bold ">{moment(item.obrInicio).utc().locale('pt-br').format('L')}</span>
+                                <span className="text-xs text-white font-bold ">{Intl.DateTimeFormat('pt-BR', {timeZone: 'UTC'}).format(new Date(item.obrInicio))}</span>
                             </div>
                             <div className='flex flex-col items-end justify-center px-2'>
                                 <span className="text-xs text-slate-400 font-bold ">Prev. Término:</span>
-                                <span className="text-xs text-white font-bold ">{moment(item.obrPreTermino).utc().locale('pt-br').format('L')}</span>
+                                <span className="text-xs text-white font-bold ">{Intl.DateTimeFormat('pt-BR', {timeZone: 'UTC'}).format(new Date(item.obrPreTermino))}</span>
                             </div>
                         </div>
                         <div className='flex flex-row justify-between w-full mb-2'>

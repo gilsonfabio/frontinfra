@@ -57,7 +57,7 @@ export default function DetDiario({params}: any){
     
     const [diaId, setDiaId] = useState('');
     const [diaObrId, setDiaObrId] = useState('');
-    const [diaData, setDiaData] = useState('');
+    const [diaData, setDiaData] = useState(0);
     const [diaHora, setDiaHora] = useState('');
     const [diaIniHorTrab, setDiaIniHorTrab] = useState('');
     const [diaFinHorTrab , setDiaFinHorTrab] = useState('');
@@ -69,7 +69,12 @@ export default function DetDiario({params}: any){
     const [diaComentarios, setDiaComentarios] = useState('');
     const [diaIdResDiario, setDiaIdResDiario] = useState('');
     const [diaIdFisDiario, setDiaIdFisDiario] = useState('');
+    const [obrDatPrevisao, setObrDatPrevisao] = useState(0);
     const [diaStatus, setDiaStatus] = useState('');
+    
+    const [numDias, setNumDias] = useState(0);
+
+    let diaEntrega = 0;
 
     const [atvdiario, setAtvDiario] = useState<Array<atvdiaProps>>([]);
     const [equdiario, setEquDiario] = useState<Array<equipaProps>>([]);
@@ -80,19 +85,23 @@ export default function DetDiario({params}: any){
     useEffect(() => {   
         let idDia = params.diaId;
         api.get(`/busDiario/${idDia}`).then(resp => {
-            setDiaObrId(resp.data[0].diaObrId)
-            setDiaData(resp.data[0].diaData)
-            setDiaHora(resp.data[0].diaHora)
-            setDiaIniHorTrab(resp.data[0].diaIniHorTrab)
-            setDiaFinHorTrab(resp.data[0].diaFinHorTrab)
-            setDiaIniHorInter(resp.data[0].diaIniHorInter)
-            setDiaFinHorInter(resp.data[0].diaFinHorInter)
-            setDiaCndTmpManha(resp.data[0].diaCndTmpManha)
-            setDiaCndTmpTarde(resp.data[0].diaCndTmpTarde)
-            setDiaObservacoes(resp.data[0].diaObservacoes)
-            setDiaComentarios(resp.data[0].diaComentarios)
-            setDiaIdResDiario(resp.data[0].diaIdResDiario)
-            setDiaIdFisDiario(resp.data[0].diaIdFisDiario)
+            setDiaObrId(resp.data[0].diaObrId);
+            setDiaData(resp.data[0].diaData);
+            setDiaHora(resp.data[0].diaHora);
+            setDiaIniHorTrab(resp.data[0].diaIniHorTrab);
+            setDiaFinHorTrab(resp.data[0].diaFinHorTrab);
+            setDiaIniHorInter(resp.data[0].diaIniHorInter);
+            setDiaFinHorInter(resp.data[0].diaFinHorInter);
+            setDiaCndTmpManha(resp.data[0].diaCndTmpManha);
+            setDiaCndTmpTarde(resp.data[0].diaCndTmpTarde);
+            setDiaObservacoes(resp.data[0].diaObservacoes);
+            setDiaComentarios(resp.data[0].diaComentarios);
+            setDiaIdResDiario(resp.data[0].diaIdResDiario);
+            setDiaIdFisDiario(resp.data[0].diaIdFisDiario);
+            setObrDatPrevisao(resp.data[0].obrPreTermino);
+
+            diaEntrega = (((Date.parse(resp.data[0].obrPreTermino)) - (Date.parse(resp.data[0].diaData))) / (24 * 60 * 60 * 1000));
+            setNumDias(diaEntrega);
         }).catch((err) => {
             console.error("ops! ocorreu um erro" + err);
         });
@@ -143,17 +152,17 @@ export default function DetDiario({params}: any){
                                 </Link> 
                             </div>
                             <div className='col-span-1 '>
-                                <Link className="flex flex-row items-center justify-center bg-sky-700 hover:bg-sky-600 rounded-md w-30 h-8 p-2 cursor-pointer" href={`/MãoObra/${params.diaId}`}>
+                                <Link className="flex flex-row items-center justify-center bg-sky-700 hover:bg-sky-600 rounded-md w-30 h-8 p-2 cursor-pointer" href={`/DiaNewAtiv/${params.diaId}`}>
                                     <span className="text-yellow-400 text-[10px] font-semibold ">Atividades da Obra</span>
                                 </Link> 
                             </div>
                             <div className='col-span-1 '>
-                                <Link className="flex flex-row items-center justify-center bg-sky-700 hover:bg-sky-600 rounded-md w-30 h-8 p-2 cursor-pointer" href={`/MãoObra/${params.diaId}`}>
+                                <Link className="flex flex-row items-center justify-center bg-sky-700 hover:bg-sky-600 rounded-md w-30 h-8 p-2 cursor-pointer" href={`/DiaMaoObra/${params.diaId}`}>
                                     <span className="text-yellow-400 text-[10px] font-semibold ">Pessoal Mão de Obra</span>
                                 </Link>
                             </div>
                             <div className='col-span-1 '>
-                                <Link className="flex flex-row items-center justify-center bg-sky-700 hover:bg-sky-600 rounded-md w-30 h-8 p-2 cursor-pointer" href={`/EquObra/${params.diaId}`}>
+                                <Link className="flex flex-row items-center justify-center bg-sky-700 hover:bg-sky-600 rounded-md w-30 h-8 p-2 cursor-pointer" href={`/DiaNewEquip/${params.diaId}`}>
                                     <span className="text-yellow-400 text-[10px] font-semibold ">Equipamentos Obra</span>
                                 </Link> 
                             </div>                           
@@ -175,7 +184,7 @@ export default function DetDiario({params}: any){
                                         Data: 
                                     </span>
                                     <span className='text-white w-full'>
-                                        {Intl.DateTimeFormat('pt-BR', {timeZone: 'UTC'}).format(new Date(diaData))}
+                                    {Intl.DateTimeFormat('pt-BR', {timeZone: 'UTC'}).format(new Date(diaData))}
                                     </span>
                                 </div>    
                             </div>
@@ -233,6 +242,24 @@ export default function DetDiario({params}: any){
                                     </span>
                                 </div>
                             </div>    
+                            <div className='flex flex-row justify-between px-2'>
+                                <div className='flex flex-col w-[50%] mb-4'>
+                                    <span className='text-slate-400 w-full'>
+                                        Previsão Entrega: 
+                                    </span>
+                                    <span className='text-white w-full'>
+                                    {Intl.DateTimeFormat('pt-BR', {timeZone: 'UTC'}).format(new Date(obrDatPrevisao))}
+                                    </span>
+                                </div>                                    
+                                <div className='flex flex-col w-[50%] mb-4'>
+                                    <span className='text-slate-400 w-full'>
+                                        Dias p/ Entrega: 
+                                    </span>
+                                    <span className='text-white w-full'>
+                                        {numDias}
+                                    </span>
+                                </div>                                    
+                            </div> 
                             <div className='flex flex-row justify-between px-2'>
                                 <div className='flex flex-col w-full mb-4'>
                                     <span className='text-slate-400 w-full'>
